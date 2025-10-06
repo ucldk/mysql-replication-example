@@ -1,0 +1,42 @@
+networks:
+  replication-net:
+    driver: bridge
+
+volumes:
+  mysql_source_data:
+  mysql_replica_data:
+
+services:
+  mysql-source:
+    image: mysql:8.0
+    container_name: mysql-source
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: repldb
+      MYSQL_USER: repluser
+      MYSQL_PASSWORD: repluser
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_source_data:/var/lib/mysql
+      - ./source-config.cnf:/etc/mysql/conf.d/custom.cnf
+    networks:
+      - replication-net
+    command: --default-authentication-plugin=mysql_native_password
+
+  mysql-replica:
+    image: mysql:8.0
+    container_name: mysql-replica
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_replica_data:/var/lib/mysql
+      - ./replica-config.cnf:/etc/mysql/conf.d/custom.cnf
+    networks:
+      - replication-net
+    command: --default-authentication-plugin=mysql_native_password
+    depends_on:
+      - mysql-source
