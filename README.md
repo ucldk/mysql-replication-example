@@ -96,3 +96,7 @@ CHANGE REPLICATION SOURCE TO
     - `SOURCE_PASSWORD`: The password for the replication USER
     - `SOURCE_LOG_FILE`: The name of the binary log file from which the replica should start reading, typically obtained from the `SHOW MASTER STATUS` command on the source server
     - `SOURCE_LOG_POS`: The position within the binary log file from which to start reading, also obtained from the `SHOW MASTER STATUS` command on the source server
+
+### `reset.sh`
+
+Just a reset file, which stops the SQL servers and removes the volumes
