@@ -12,7 +12,7 @@ services:
     container_name: mysql-source
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: repldb
+      MYSQL_DATABASE: testdb
       MYSQL_USER: repluser
       MYSQL_PASSWORD: repluser
     ports:
